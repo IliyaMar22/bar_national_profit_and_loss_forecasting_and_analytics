@@ -1,0 +1,41 @@
+{
+  "name": "bar-national-pnl-ultimate",
+  "version": "2.0.0",
+  "description": "Bar National P&L Analysis Ultimate Edition - Dockerized Financial Management System with Forecasting",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start",
+    "docker:build": "docker build -t bar-national-pnl-ultimate .",
+    "docker:run": "docker run -p 3000:3000 bar-national-pnl-ultimate",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:seed": "docker-compose up seed",
+    "docker:clean": "docker-compose down -v && docker system prune -f"
+  },
+  "dependencies": {
+    "mongoose": "^8.0.0",
+    "next": "13.5.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "next-auth": "^4.24.5",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "recharts": "^2.8.0",
+    "date-fns": "^2.30.0",
+    "react-hook-form": "^7.48.2",
+    "react-hot-toast": "^2.4.1"
+  },
+  "keywords": [
+    "financial",
+    "management",
+    "bar-national",
+    "docker",
+    "forecasting",
+    "pnl",
+    "mongodb"
+  ],
+  "author": "Bar National",
+  "license": "ISC"
+}

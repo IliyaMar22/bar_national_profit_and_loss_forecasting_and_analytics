@@ -1,0 +1,83 @@
+services:
+  # MongoDB Database for Financial Data
+  mongodb:
+    image: mongo:7.0
+    container_name: bar-national-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: bar-national
+    volumes:
+      - mongodb_data:/data/db
+      - ./scripts/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - bar-national-network
+
+  # MongoDB Database for User Authentication
+  users-mongodb:
+    image: mongo:7.0
+    container_name: bar-national-users-mongodb
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: bar-national-users
+    volumes:
+      - users_mongodb_data:/data/db
+    networks:
+      - bar-national-network
+
+  # Next.js Application
+  app:
+    build: .
+    container_name: bar-national-app
+    restart: unless-stopped
+    ports:
+      - "8089:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://admin:password123@mongodb:27017/bar-national?authSource=admin
+      - MONGODB_USERS_URI=mongodb://admin:password123@users-mongodb:27017/bar-national-users?authSource=admin
+      - NEXTAUTH_SECRET=bar-national-secret-key-2024-ultimate-edition
+      - NEXTAUTH_URL=http://localhost:8089
+      - PORT=3000
+    depends_on:
+      - mongodb
+      - users-mongodb
+    networks:
+      - bar-national-network
+    volumes:
+      - ./logs:/app/logs
+
+  # MongoDB Seed Service (runs once to populate data)
+  seed:
+    image: mongo:7.0
+    container_name: bar-national-seed
+    depends_on:
+      - mongodb
+    networks:
+      - bar-national-network
+    volumes:
+      - ./scripts/seed-data.js:/seed-data.js:ro
+    command: >
+      sh -c "
+        echo 'Waiting for MongoDB to be ready...' &&
+        sleep 10 &&
+        mongo mongodb://admin:password123@mongodb:27017/bar-national?authSource=admin /seed-data.js &&
+        echo 'Database seeded successfully!'
+      "
+
+volumes:
+  mongodb_data:
+    driver: local
+  users_mongodb_data:
+    driver: local
+
+networks:
+  bar-national-network:
+    driver: bridge

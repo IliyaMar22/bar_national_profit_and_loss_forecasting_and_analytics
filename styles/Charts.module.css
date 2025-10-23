@@ -1,0 +1,229 @@
+/* Chart Styles */
+.chartContainer {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.chartTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.75rem;
+}
+
+.chartWrapper {
+  width: 100%;
+  height: 300px;
+  position: relative;
+}
+
+.noDataMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #718096;
+  font-size: 1.1rem;
+  font-style: italic;
+  background: #f7fafc;
+  border-radius: 12px;
+  border: 2px dashed #e2e8f0;
+}
+
+.tooltip {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  font-family: 'Crimson Text', serif;
+}
+
+.tooltipLabel {
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.tooltip p {
+  margin: 0.25rem 0;
+  font-size: 0.85rem;
+}
+
+/* Recharts Custom Styles */
+.recharts-cartesian-axis-tick-value {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.8rem;
+}
+
+.recharts-legend-item-text {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.recharts-tooltip-wrapper {
+  outline: none;
+}
+
+/* Chart Grid Lines */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: #e2e8f0;
+  stroke-dasharray: 3 3;
+}
+
+/* Chart Axes */
+.recharts-cartesian-axis-line {
+  stroke: #cbd5e0;
+}
+
+.recharts-cartesian-axis-tick-line {
+  stroke: #cbd5e0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chartContainer {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .chartTitle {
+    font-size: 1.3rem;
+  }
+  
+  .chartWrapper {
+    height: 250px;
+  }
+  
+  .tooltip {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chartContainer {
+    padding: 0.75rem;
+  }
+  
+  .chartTitle {
+    font-size: 1.2rem;
+  }
+  
+  .chartWrapper {
+    height: 200px;
+  }
+  
+  .noDataMessage {
+    height: 150px;
+    font-size: 1rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .chartContainer {
+    background: rgba(26, 32, 44, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .chartTitle {
+    color: #e2e8f0;
+    border-bottom-color: #4a5568;
+  }
+  
+  .noDataMessage {
+    background: #2d3748;
+    color: #a0aec0;
+    border-color: #4a5568;
+  }
+  
+  .tooltip {
+    background: rgba(26, 32, 44, 0.95);
+    border-color: #4a5568;
+    color: #e2e8f0;
+  }
+  
+  .tooltipLabel {
+    color: #e2e8f0;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .chartContainer {
+    background: white;
+    border: 2px solid #000;
+  }
+  
+  .chartTitle {
+    color: #000;
+    border-bottom-color: #000;
+  }
+  
+  .tooltip {
+    background: white;
+    border: 2px solid #000;
+    color: #000;
+  }
+}
+
+/* Animation for chart loading */
+@keyframes chartFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chartContainer {
+  animation: chartFadeIn 0.6s ease-out;
+}
+
+/* Hover effects for interactive elements */
+.recharts-bar:hover {
+  filter: brightness(1.1);
+  transition: filter 0.2s ease;
+}
+
+.recharts-line:hover {
+  filter: brightness(1.1);
+  transition: filter 0.2s ease;
+}
+
+/* Custom scrollbar for chart containers */
+.chartContainer::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.chartContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.chartContainer::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.chartContainer::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
