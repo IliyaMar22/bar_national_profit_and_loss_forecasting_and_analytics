@@ -1,0 +1,37 @@
+# Production Docker Compose - Uses MongoDB Atlas
+# This version connects to cloud-hosted MongoDB instead of local containers
+
+services:
+  # Next.js Application (only service needed in production)
+  app:
+    build: .
+    container_name: bar-national-app-production
+    restart: unless-stopped
+    ports:
+      - "8089:3000"
+    environment:
+      - NODE_ENV=production
+      # MongoDB Atlas URIs (replace with your actual Atlas connection strings)
+      - MONGODB_URI=${MONGODB_URI}
+      - MONGODB_USERS_URI=${MONGODB_USERS_URI}
+      # NextAuth Configuration
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - PORT=3000
+    networks:
+      - bar-national-network
+    volumes:
+      - ./logs:/app/logs
+
+networks:
+  bar-national-network:
+    driver: bridge
+
+# NOTE: No MongoDB containers in production!
+# MongoDB is hosted on Atlas cloud instead.
+# 
+# To deploy:
+# 1. Set up MongoDB Atlas clusters
+# 2. Create .env.production file with your Atlas URIs
+# 3. Run: docker-compose -f docker-compose.production.yml up -d
+
